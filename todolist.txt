@@ -1,0 +1,8 @@
+- Make the Stack section more compact and visually balanced.
+  - Reduce the size of the technology names slightly.
+  - Reduce vertical spacing between the rows.
+  - Keep the technologies in a tighter, cleaner layout.
+  - Make the entire Stack section feel proportionate to the other portfolio sections.
+  - Keep the existing typography style, colors, dividers, and overall design unchanged.
+  - Do not make the section overly dense; maintain comfortable spacing and readability.
+  - Ensure the layout remains responsive on mobile and desktop.
