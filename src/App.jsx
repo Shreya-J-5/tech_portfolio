@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const services = [
   {
@@ -22,25 +22,102 @@ const services = [
 
 const projects = [
   {
-    href: 'https://github.com/yourhandle/one',
-    title: 'Project one',
-    description: 'What it is, what is notable about how it works, where it is used.',
-    tags: ['C++', 'PostgreSQL'],
+    href: 'https://github.com/Shreya-J-5/Fyro',
+    title: 'Fyro (Discord Bot)',
+    description: 'Feature-rich Discord music bot with Spotify integration, interactive player controls, mood-based playlists, and queue management.',
+    tags: ['TypeScript', 'discord.js', 'PostgreSQL', 'Redis'],
     delay: 0,
   },
   {
-    href: 'https://github.com/yourhandle/two',
-    title: 'Project two',
-    description: 'Lead with results, not features. Keep to three or four projects.',
-    tags: ['Python', 'API'],
+    href: 'https://github.com/Shreya-J-5/PaletteLens',
+    title: 'PaletteLens',
+    description: 'Visual color analysis engine extracting harmonic color palettes, testing WCAG contrast ratios, and analyzing image palettes in real time.',
+    tags: ['React', 'TypeScript', 'Vite', 'Canvas API'],
     delay: 1,
   },
   {
-    href: 'https://github.com/yourhandle/three',
-    title: 'Project three',
-    description: 'Link every project to a repo, demo or write-up.',
-    tags: ['TypeScript'],
+    href: 'https://github.com/Shreya-J-5/scamshield',
+    title: 'ScamShield (Chrome Extension)',
+    description: 'AI-powered cybersecurity browser extension and FastAPI backend for real-time phishing detection, link safety scoring, and credential protection.',
+    tags: ['Chrome Extension', 'Python', 'FastAPI', 'AI / Security'],
     delay: 2,
+  },
+  {
+    href: 'https://github.com/Shreya-J-5/ValoRa---Valorant-Tracker',
+    title: 'ValoRa',
+    description: 'Valorant companion platform tracking live player stats, agent tiers, patch notes, weapon skins, and tactical guides.',
+    tags: ['Next.js', 'TypeScript', 'Tailwind CSS', 'API'],
+    delay: 0,
+  },
+  {
+    href: 'https://github.com/Shreya-J-5/Cattle.ai',
+    title: 'Cattle.ai',
+    description: 'AI/ML cattle monitoring platform predicting milk yields and detecting early disease indicators from sensor and feed data.',
+    tags: ['Python', 'Machine Learning', 'TypeScript', 'FastAPI'],
+    delay: 1,
+  },
+  {
+    href: 'https://github.com/Shreya-J-5/windows_theme_portfolio',
+    title: 'Windows 11 Web OS',
+    description: 'Interactive Windows 11 desktop experience in the browser with authentic window management, multitasking, and fluent UI.',
+    tags: ['Next.js', 'TypeScript', 'Zustand', 'Framer Motion'],
+    delay: 2,
+  },
+  {
+    href: 'https://github.com/Shreya-J-5/IP4-detector',
+    title: 'IP4 Detector',
+    description: 'Network diagnostic tool calculating connection health scores, WebRTC leak exposure, and geolocation routing latency.',
+    tags: ['TypeScript', 'Networking', 'WebRTC', 'APIs'],
+    delay: 3,
+  },
+  {
+    href: 'https://github.com/Shreya-J-5/PyConnect',
+    title: 'PyConnect',
+    description: 'Lightweight, asynchronous networking and communication framework built in Python for distributed systems.',
+    tags: ['Python', 'Networking', 'AsyncIO', 'Sockets'],
+    delay: 4,
+  },
+  {
+    href: 'https://github.com/Shreya-J-5/PyCall',
+    title: 'PyCall',
+    description: 'Python communication module enabling programmatic audio streaming, voice handling, and telephony integrations.',
+    tags: ['Python', 'Audio Processing', 'Streaming', 'APIs'],
+    delay: 5,
+  },
+  {
+    href: 'https://github.com/Shreya-J-5/object-detection',
+    title: 'Object Detection System',
+    description: 'Computer vision pipeline detecting and classifying objects in images and live video streams with high accuracy.',
+    tags: ['Python', 'OpenCV', 'Deep Learning', 'PyTorch'],
+    delay: 6,
+  },
+  {
+    href: 'https://github.com/Shreya-J-5/Spendly-Expense-Tracker',
+    title: 'Spendly Expense Tracker',
+    description: 'Personal financial tracking web application for categorizing daily expenses, budget forecasting, and monthly spending insights.',
+    tags: ['JavaScript', 'HTML5', 'CSS3', 'Local Storage'],
+    delay: 7,
+  },
+  {
+    href: 'https://github.com/Shreya-J-5/National_Job_Market_Demand_Forecaster',
+    title: 'Job Market Demand Forecaster',
+    description: 'Data analytics platform analyzing hiring trends and forecasting employment demand across technical job markets.',
+    tags: ['JavaScript', 'Data Analytics', 'Forecasting', 'Charts'],
+    delay: 8,
+  },
+  {
+    href: 'https://github.com/Shreya-J-5/QR-Code-Generator-API-using-Python-and-Docker',
+    title: 'QR Code Generator API',
+    description: 'Containerized microservice API built with Python and Docker for generating customizable dynamic QR codes on demand.',
+    tags: ['Python', 'Docker', 'REST API', 'Microservices'],
+    delay: 9,
+  },
+  {
+    href: 'https://github.com/Shreya-J-5/weather-app',
+    title: 'Weather App',
+    description: 'Modern weather dashboard delivering real-time forecasts, atmospheric conditions, and location-based meteorological data.',
+    tags: ['JavaScript', 'REST API', 'CSS3', 'Weather API'],
+    delay: 10,
   },
 ];
 
@@ -72,7 +149,9 @@ const marqueeOne = ['React', 'Python', 'Next.js', 'Java', 'MySql','JavaScript'];
 const marqueeTwo = ['Node.js', 'PostgreSQL', 'Flask', 'Django', 'Django Rest'];
 
 function App() {
+  const [showAllProjects, setShowAllProjects] = useState(false);
   const nameRef = useRef(null);
+  const bgRef = useRef(null);
 
   const handleProjectMouseMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -127,9 +206,8 @@ function App() {
     }
 
     const toggleTheme = () => {
-      const isDark =
-        root.getAttribute('data-theme') === 'dark' ||
-        (!root.getAttribute('data-theme') && matchMedia('(prefers-color-scheme: dark)').matches);
+      const currentTheme = root.getAttribute('data-theme');
+      const isDark = currentTheme ? currentTheme === 'dark' : true;
       const nextTheme = isDark ? 'light' : 'dark';
       root.setAttribute('data-theme', nextTheme);
 
@@ -144,6 +222,93 @@ function App() {
 
     return () => {
       themeButton?.removeEventListener('click', toggleTheme);
+    };
+  }, []);
+
+  useEffect(() => {
+    const bgNode = bgRef.current;
+    if (!bgNode) return;
+
+    // Check for user reduced motion preference
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (mediaQuery.matches) {
+      bgNode.style.setProperty('--glow-x', '0px');
+      bgNode.style.setProperty('--glow-y', '0px');
+      bgNode.style.setProperty('--glow-scale', '1');
+      bgNode.style.setProperty('--glow-opacity', '0.78');
+      bgNode.style.setProperty('--glow-color', '#7078FA');
+      bgNode.style.setProperty('--glow-mid', '#484CAC');
+      return;
+    }
+
+    let targetProgress = 0;
+    let currentProgress = 0;
+    let rafId = null;
+    let isRunning = false;
+
+    // Updates CSS custom properties with eased progress
+    // Blend colors: #7078FA (112, 120, 250) <-> #8E96FF (142, 150, 255)
+    // Mid glow:     #484CAC (72, 76, 172)   <-> #5D63C4 (93, 99, 196)
+    const updateCSS = (p) => {
+      const glowX = ((p - 0.5) * 80).toFixed(2);
+      const glowY = ((p - 0.5) * -140).toFixed(2);
+      const scale = (1 + Math.sin(p * Math.PI) * 0.12).toFixed(3);
+      const opacity = (0.72 + Math.sin(p * Math.PI) * 0.16).toFixed(3);
+
+      const r = Math.round(112 + (142 - 112) * p);
+      const g = Math.round(120 + (150 - 120) * p);
+      const b = Math.round(250 + (255 - 250) * p);
+
+      const mr = Math.round(72 + (93 - 72) * p);
+      const mg = Math.round(76 + (99 - 76) * p);
+      const mb = Math.round(172 + (196 - 172) * p);
+
+      bgNode.style.setProperty('--glow-x', `${glowX}px`);
+      bgNode.style.setProperty('--glow-y', `${glowY}px`);
+      bgNode.style.setProperty('--glow-scale', scale);
+      bgNode.style.setProperty('--glow-opacity', opacity);
+      bgNode.style.setProperty('--glow-color', `rgb(${r}, ${g}, ${b})`);
+      bgNode.style.setProperty('--glow-mid', `rgb(${mr}, ${mg}, ${mb})`);
+    };
+
+    const tick = () => {
+      // Smooth lerp easing toward target
+      currentProgress += (targetProgress - currentProgress) * 0.08;
+      updateCSS(currentProgress);
+
+      if (Math.abs(targetProgress - currentProgress) > 0.0005) {
+        rafId = requestAnimationFrame(tick);
+      } else {
+        currentProgress = targetProgress;
+        updateCSS(currentProgress);
+        isRunning = false;
+        rafId = null;
+      }
+    };
+
+    const onScroll = () => {
+      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+      targetProgress = scrollHeight > 0 ? Math.min(Math.max(window.scrollY / scrollHeight, 0), 1) : 0;
+
+      if (!isRunning) {
+        isRunning = true;
+        rafId = requestAnimationFrame(tick);
+      }
+    };
+
+    onScroll();
+    currentProgress = targetProgress;
+    updateCSS(currentProgress);
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+      }
     };
   }, []);
 
@@ -229,6 +394,9 @@ function App() {
   return (
     <>
       <div id="bar" />
+      <div className="bg-gradient-wrap" aria-hidden="true" ref={bgRef}>
+        <div className="bg-glow-shape" />
+      </div>
       <header>
         <div className="wrap">
           <a href="#top" className="ln">
@@ -304,11 +472,13 @@ function App() {
         <section className="sec" id="work">
           <h2>Selected work</h2>
           <div>
-            {projects.map((project) => (
+            {(showAllProjects ? projects : projects.slice(0, 3)).map((project) => (
               <a
                 key={project.title}
                 className="proj rv"
                 href={project.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 onMouseMove={handleProjectMouseMove}
                 onMouseLeave={handleProjectMouseLeave}
                 style={project.delay ? { '--d': project.delay } : undefined}
@@ -343,6 +513,35 @@ function App() {
                 </div>
               </a>
             ))}
+
+            <div className="see-more-wrap">
+              <button
+                type="button"
+                className="see-more-btn"
+                onClick={() => setShowAllProjects((prev) => !prev)}
+                aria-expanded={showAllProjects}
+              >
+                <span>
+                  {showAllProjects
+                    ? 'Show less'
+                    : `See more (${projects.length - 3} repositories)`}
+                </span>
+                <svg
+                  className={`see-more-icon ${showAllProjects ? 'open' : ''}`}
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </button>
+            </div>
           </div>
         </section>
 
@@ -409,13 +608,13 @@ function App() {
             shreya051006@gmail.com
           </a>
           <div className="acts">
-            <a className="ln" href="https://cal.com/shreya.j">
+            <a className="ln"target="_blank"  href="https://cal.com/shreya.j">
               Book a call
             </a>
-            <a className="ln" href="https://github.com/Shreya-J-5">
+            <a className="ln" target="_blank" href="https://github.com/Shreya-J-5">
               GitHub
             </a>
-            <a className="ln" href="https://www.linkedin.com/in/shreya-jolapara-4b2358354">
+            <a className="ln" target="_blank" href="https://www.linkedin.com/in/shreya-jolapara-4b2358354">
               LinkedIn
             </a>
             <button className="ln" id="copy" type="button" onClick={handleCopy}>
