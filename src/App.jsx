@@ -4,12 +4,12 @@ const services = [
   {
     title: 'Backend architecture',
     description: 'Describe what you design and the outcome it gives, in two lines.',
-    tags: ['Node.js', 'TypeScript', 'Go'],
+    tags: ['Node.js', 'TypeScript', 'Python'],
   },
   {
-    title: 'Infrastructure and delivery',
+    title: 'Graphic Designer',
     description: 'Another core skill, written so a non-engineer understands it.',
-    tags: ['Docker', 'PostgreSQL', 'CI/CD'],
+    tags: ['Canva', 'Figma', 'Adobe', 'Photoshop'],
     delay: 1,
   },
   {
@@ -145,7 +145,7 @@ const jobs = [
   },
 ];
 
-const marqueeOne = ['React', 'Python', 'Next.js', 'Java', 'MySql','JavaScript'];
+const marqueeOne = ['React', 'Python', 'Next.js', 'Java', 'MySql', 'JavaScript'];
 const marqueeTwo = ['Node.js', 'PostgreSQL', 'Flask', 'Django', 'Django Rest'];
 
 function App() {
@@ -608,7 +608,7 @@ function App() {
             shreya051006@gmail.com
           </a>
           <div className="acts">
-            <a className="ln"target="_blank"  href="https://cal.com/shreya.j">
+            <a className="ln" target="_blank" href="https://cal.com/shreya.j">
               Book a call
             </a>
             <a className="ln" target="_blank" href="https://github.com/Shreya-J-5">
